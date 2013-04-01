@@ -1,0 +1,28 @@
+nav {
+    border: 1px solid black;
+    margin: 0 .5em 0 .5em;
+}
+
+nav a {
+    display: block;
+    height: 2em;
+    width: 2em;
+}
+
+td, th {
+    border: 1px solid black;
+    height: 3em;
+    padding: 1em;
+    width: 3em;
+}
+
+.red { background-color: red; }
+.orange { background-color: orange; }
+.yellow { background-color: yellow; }
+.green { background-color: green; }
+.blue { background-color: blue; }
+.purple { background-color: purple; }
+.white { background-color: white; }
+.black { background-color: black; }
+
+.grey { background-color: grey; }
