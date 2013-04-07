@@ -64,12 +64,15 @@ var Mastermind = function() {
                 var a = $(this),
                     cell = a.parents('td').first(),
                     color = a.attr('class'),
-                    row = a.parents('tr').first();
+                    row = a.parents('tr').first(),
+                    submit = row.find('input.submit');
 
-                cell.removeClass().addClass(color);
+                cell.hasClass('grey') ? cell.removeClass().addClass(color) : cell.removeClass().addClass('grey');
 
                 if(row.find('td.grey').length == 0) {
-                    row.find('input.submit').removeAttr('disabled');
+                    submit.removeAttr('disabled');
+                } else {
+                    submit.attr('disabled', true);
                 }
             });
         },
