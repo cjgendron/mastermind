@@ -67,7 +67,7 @@ var Mastermind = function() {
                     row = a.parents('tr').first(),
                     submit = row.find('input.submit');
 
-                cell.hasClass('grey') ? cell.removeClass().addClass(color) : cell.removeClass().addClass('grey');
+                cell.hasClass(color) ? cell.removeClass().addClass('grey') : cell.removeClass().addClass(color);
 
                 if(row.find('td.grey').length == 0) {
                     submit.removeAttr('disabled');
