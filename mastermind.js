@@ -138,7 +138,8 @@ var Mastermind = function() {
                     table_body.append(table_row.clone());
                 }
             } else {
-                status.text('You won!');
+                row.append($('<td />').text('YOU WON!'));
+                //status.text('You won!');
                 RenderPattern();
             }
         },
