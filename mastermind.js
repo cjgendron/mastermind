@@ -40,8 +40,10 @@ var Mastermind = function() {
         GetRandomColor = function() {
             return colors[Math.floor(Math.random() * 8)];
         },
+        hints_remaining = 3,
         Init = function() {
             InitDropdown();
+            InitHint();
             InitTableRow();
             pattern = GenerateRowValues();
             current_try = 1;
@@ -76,11 +78,26 @@ var Mastermind = function() {
                 }
             });
         },
+        InitHint = function() {
+            $('.hints .count').text(hints_remaining);
+            $('table').on('click', 'th a', function(event) {
+                if(hints_remaining) {
+                    hints_remaining--;
+                    $('.hints .count').text(hints_remaining);
+                    $(this).addClass('disabled')
+                        .parent().addClass(pattern[$.inArray(this,$('th a').get())]);
+
+                    if(!hints_remaining) {
+                        $('th a').addClass('disabled');
+                    }
+                }
+            });
+        },
         InitTableRow = function() {
             table_row = $('<tr />');
 
             var table_cell = $('<td />').addClass('grey').append(dropdown),
-                submit_buttom = $('<input />')
+                submit_button = $('<input />')
                     .addClass('submit')
                     .attr('type', 'button')
                     .attr('disabled', true)
@@ -90,7 +107,7 @@ var Mastermind = function() {
                 table_row.append(table_cell.clone());
             }
 
-            table_row.append(submit_buttom);
+            table_row.append(submit_button);
 
             $('table').on('click', 'input.submit', function(event) {
                 var row = $(this).parents('tr').first(),

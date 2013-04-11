@@ -1,6 +1,6 @@
 nav {
     border: 1px solid black;
-    margin: 0 .5em 0 .5em;
+    margin: 0 1em 0 1em;
 }
 
 nav a {
@@ -11,9 +11,18 @@ nav a {
 
 td, th {
     border: 1px solid black;
-    height: 3em;
-    padding: 1em;
-    width: 3em;
+    height: 4em;
+    padding: .5em;
+    width: 4em;
+}
+
+th a {
+    display: none;
+}
+
+th:hover a:not(.disabled) {
+    cursor: pointer;
+    display: block;
 }
 
 .red { background-color: red; }
