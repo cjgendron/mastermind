@@ -6,6 +6,26 @@
 </head>
 <body>
     <h1>Welcome to Mastermind!</h1>
+    <h2>Directions:</h2>
+    <p>A pattern is hiding behind the five white squares. To win this game, you must guess the pattern.</p>
+    <ol>
+        <li>Pick a color in each column.</li>
+        <li>Click “Submit.”</li>
+        <li>
+            Results will appear to the right of your guess.
+            <ul>
+                <li>A red square means that one of your guesses is the right color in the right spot. (It will not show you which guess is correct; it will only show how many guesses were correct.)</li>
+                <li>A white square means that you have the correct color, but in the wrong spot. (Like the red squares, it will not specify which guess earned the white square.)</li>
+            </ul>
+        </li>
+        <li>Continue to guess until you win. OR... After 12 incorrect guesses, the game is over because you are a giant loser.</li>
+    </ol>
+    <h2>NOTES:</h2>
+    <ol type="A">
+        <li>There are three hints available. Use them wisely.</li>
+        <li>Colors may repeat (once or more) in the pattern.</li>
+        <li>Suggestion - Try five different colors for your first guess.</li>
+    </ol>
     <h2 class="status">Status goes here...</h2>
     <h2 class="hints">Hints Remaining: <span class="count"></span></h2>
     <input onclick="location.reload()" type="button" value="New Game" />
