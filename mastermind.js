@@ -44,30 +44,25 @@ var Mastermind = function() {
         Init = function() {
             InitDropdown();
             InitHint();
+            InitResults();
             InitTableRow();
             pattern = GenerateRowValues();
             current_try = 1;
-            //RenderPattern();
             table_body = $('tbody');
-            table_body.append(table_row.clone());
+            table_body.append(table_row);
             status = $('.status');
             status.text('Game initialized successfully...');
         },
         InitDropdown = function() {
-            dropdown = $('<nav />');
-
-            $.each(colors, function(index, value) {
-                var option = $('<a />').addClass(value);
-
-                dropdown.append(option);
-            });
+            templates.dropdown = Hogan.compile(templates.dropdown);
+            dropdown = templates.dropdown.render({ colors: colors });
 
             $('table').on('click', 'nav a', function(event) {
                 var a = $(this),
                     cell = a.parents('td').first(),
                     color = a.attr('class'),
                     row = a.parents('tr').first(),
-                    submit = row.find('input.submit');
+                    submit = $('input.submit');
 
                 cell.hasClass(color) ? cell.removeClass().addClass('grey') : cell.removeClass().addClass(color);
 
@@ -93,24 +88,16 @@ var Mastermind = function() {
                 }
             });
         },
+        InitResults = function() {
+            red_result = Hogan.compile(templates.red_result).render();
+            white_result = Hogan.compile(templates.white_result).render();
+        },
         InitTableRow = function() {
-            table_row = $('<tr />');
+            table_cell = Hogan.compile(templates.table_cell).render({}, { dropdown: dropdown });
+            table_row = Hogan.compile(templates.table_row).render({}, { table_cell: table_cell });
 
-            var table_cell = $('<td />').addClass('grey').append(dropdown),
-                submit_button = $('<input />')
-                    .addClass('submit')
-                    .attr('type', 'button')
-                    .attr('disabled', true)
-                    .val('Submit');
-
-            for(var i = 0; i < 5; i++) {
-                table_row.append(table_cell.clone());
-            }
-
-            table_row.append(submit_button);
-
-            $('table').on('click', 'input.submit', function(event) {
-                var row = $(this).parents('tr').first(),
+            $('body').on('click', 'input.submit', function(event) {
+                var row = $('tbody tr').last(),
                     cells = row.find('td'),
                     values = [];
 
@@ -124,26 +111,22 @@ var Mastermind = function() {
             });
         },
         pattern,
+        red_result,
         RenderPattern = function() {
             $('th').each(function(index) {
                 $(this).addClass(pattern[index]);
             });
         },
         RenderResults = function(row, results) {
-            var red_result = $('<td />').addClass('red result'),
-                white_result = $('<td />').addClass('white result');
-
-            row.find('input.submit').remove();
-
             if(results.reds < 5) {
                 row.append($('<td />').text('Results:'));
 
                 for(var i = 0; i < results.reds; i++) {
-                    row.append(red_result.clone());
+                    row.append(red_result);
                 }
 
                 for(var i = 0; i < results.whites; i++) {
-                    row.append(white_result.clone());
+                    row.append(white_result);
                 }
 
                 current_try++;
@@ -152,17 +135,26 @@ var Mastermind = function() {
                     status.text('You lose!');
                     RenderPattern();
                 } else {
-                    table_body.append(table_row.clone());
+                    table_body.append(table_row);
                 }
             } else {
                 row.append($('<td />').text('YOU WON!'));
-                //status.text('You won!');
+                $('input.submit').remove();
                 RenderPattern();
             }
         },
         status,
         table_body,
-        table_row;
+        table_cell,
+        table_row,
+        templates = {
+            dropdown: '<nav>{{#colors}}<a class="{{.}}" />{{/colors}}</nav>',
+            red_result: '<td class="red result" />',
+            table_cell: '<td class="grey">{{> dropdown}}</td>',
+            table_row: '<tr>{{> table_cell}}{{> table_cell}}{{> table_cell}}{{> table_cell}}{{> table_cell}}</tr>',
+            white_result: '<td class="white result" />'
+        },
+        white_result;
 
     Init();
 }();
