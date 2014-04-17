@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mastermind</title>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/normalize.min.css" rel="stylesheet" type="text/css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/foundation.min.css" rel="stylesheet" type="text/css" />
+    <link href="mastermind.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="row">
+        <div class="small-offset-1 small-10 columns">
+            <h2>Welcome to Mastermind Solver!</h2>
+            <h5 class="subheader">Background:</h5>
+            <p>
+                There are 32768 possible patterns that can be created in a game of Ultimate Mastermind, which has 5
+                spaces, and 8 possible colors in each space.  When a player guesses a pattern, that pattern, when
+                compared to a prior guess, must yield the same result of red and white pegs as the solution pattern for
+                it to be a valid guess.  This solver uses that approach to rapidly solve via brute force for the proper
+                pattern.
+
+                The solver begins by generating all 32768 patterns and giving the user a guess.  The first guess is
+                somewhat arbitrary, and in this case is hard coded to Red, Orange, Yellow, Green, Blue.  As the user
+                enters the red/white peg counts, the system continuously filters the list of possible patterns by
+                removing patterns that would not yield those same counts when compared against the prior guess.
+            </p>
+            <h5 class="subheader">Directions:</h5>
+            <p>This solver will allow you to solve a game of mastermind</p>
+            <div class="row">
+                <ol class="small-offset-1 small-10 columns">
+                    <li>Enter the displayed "guess" into your actual game of Mastermind.</li>
+                    <li>Enter the number of red and white pegs that the guess received</li>
+                    <li>Click "Guess"</li>
+                    <li>Repeat until your guess is the right answer</li>
+                </ol>
+            </div>
+            <h5 class="subheader">Notes:</h5>
+            <div class="row">
+                <ol class="small-offset-1 small-10 columns">
+                    <li>
+                        As the number of possible answers decreases, the chances that the displayed guess is the correct
+                        pattern increases
+                    </li>
+                    <li>
+                        If the number of possible answers is 1, then the displayed guess MUST be the correct pattern
+                        - if it isn't then you either entered your guess incorrectly into the actual game or there is an
+                        error in the number of red and white pegs from a prior guess
+                    </li>
+                    <li>If the number of possible answers is 0, then there MUST be an error in a prior guess</li>
+                </ol>
+            </div>
+
+            <h4 class="status">Status goes here...</h4>
+            <table>
+                <tbody></tbody>
+            </table>
+            <input class="submit" type="button" value="Guess" />
+            <input onclick="location.reload()" type="button" value="New Game" />
+        </div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/hogan.js/2.0.0/hogan.min.js"></script>
+    <script src="solver.js" type="text/javascript"></script>
+</body>
+</html>
