@@ -35,27 +35,24 @@ var analyze = function(sample_set) {
     var matrix = new Array(n);
     for(var i = 0; i < n; i++) {
         red_white[i] = new Array(n)
-        matrix[i] = []
+        matrix[i] = [];
         for(var j = 0; j < n; j++) {
-            matrix[i].push(0)
+            matrix[i].push(0);
         }
     }
-    alert("I made the matrix")
 
     for(var i = 0; i < n; i++) {
         var solution = sample_set[i]
         for(var j = 0; j < n; j++) {
             if(j >= i) {
-                var guess = sample_set[j]
-                var results = AnalyzeRow(solution, guess)
-                red_white[i][j] = results.reds * 10 + results.whites
+                var guess = sample_set[j];
+                var results = AnalyzeRow(solution, guess);
+                red_white[i][j] = results.reds * 10 + results.whites;
             } else {
-                red_white[i][j] = red_white[j][i]
+                red_white[i][j] = red_white[j][i];
             }
         }
     }
-
-    alert("about to enter the n^3")
 
     // O(n^3)!! Gross! D:  
     for(var i = 0; i < n; i++) {
@@ -63,13 +60,11 @@ var analyze = function(sample_set) {
             for(var k = 0; k < n; k++) {
                 var results = red_white[i][j]
                 if(results === red_white[k][j]) {
-                    matrix[i][j] = matrix[i][j] + 1
+                    matrix[i][j] = matrix[i][j] + 1;
                 }
             }
         }
     }
-
-    alert("made it!")
 
     // next_sample_set[i] = the reduced sample set
     var next_sample_set = new Array(n)
@@ -77,31 +72,28 @@ var analyze = function(sample_set) {
         next_sample_set[i] = matrix[i].reduce(function(a,b){ return a + b }, 0);
     }
 
-    var minimum = _.min(next_sample_set)
+    var minimum = _.min(next_sample_set);
 
     best_guesses = []
     for(var i = 0; i < n; i++) {
         if(next_sample_set[i] === minimum) {
-            best_guesses.push(sample_set[i])
+            best_guesses.push(sample_set[i]);
         }
     }
-    return best_guesses
-
-
+    return best_guesses;
 
 }
 
-var before = _.now()
 possible_answers = []
 NUM_SPACES = prompt("spaces?")
 NUM_COLORS = prompt("colors?")
+
 for(var i = 0; i < Math.pow(NUM_COLORS, NUM_SPACES); i++) {
     var possible_answer = ("0000"+i.toString(NUM_COLORS)).slice(-NUM_SPACES);
-
     possible_answers.push(possible_answer.split(''));
 }
 
-
+var before = _.now()
 console.log(analyze(possible_answers))
 var after = _.now()
 console.log("time: " + (after - before).toString())
